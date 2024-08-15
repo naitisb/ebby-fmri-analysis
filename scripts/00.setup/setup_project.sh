@@ -17,21 +17,17 @@ Usage() {
 	echo
 	echo
 	echo "Usage:"
-	echo "./setup_project cohort PROJECT_NAME"
+	echo "./setup_project STUDY_NAME PROJECT_NAME"
 	echo
-	echo "You must provide (1) the cohort for analysis and (2) a PROJECT_NAME (with no spaces) so the associated project folder can be generated"
+	echo "You must provide (1) STUDY_NAME and (2) a PROJECT_NAME (with no spaces) so the associated project folder can be generated"
 	echo
 	echo "Example:"
-	echo "./setup_project TEBC-5y pixar"
+	echo "./setup_project sgsss EMF"
 	echo
-	echo "For non-EBC data, the 'cohort' argument passed in the script call will be the name of the study or dataset"
-	echo
-	echo "This script must be run within the /EBC/ directory on the server due to space requirements."
-	echo "The script will terminiate if run outside of the /EBC/ directory."
 	echo
 	echo "This script only needs to be run once when setting up your project folder."
 	echo
-	echo "Script created by Melissa Thye"
+	echo "Script created by Melissa Thye and modified by Naiti Bhatt"
 	echo
 	exit
 }
@@ -44,12 +40,7 @@ cohort=$1
 proj=$2
 
 # define directories
-dataDir="/EBC/processing" # location of shared files
-
-# if the script is run outside of the EBC directory (e.g., in home directory where space is limited), terminate the script and show usage documentation
-if [[ ! "$PWD" =~ "/EBC/" ]]; 
-then Usage
-fi
+dataDir="/RichardsonLab/processing" # location of shared files
 
 # warn if the project directory already exists
 if [ -d ${proj} ]
@@ -80,8 +71,8 @@ else
 	echo "copying scripts and data files to project directory"
 	echo
 
-	cp -r ${dataDir}/scripts/fMRI/. ${proj}/scripts
-	cp -r ${dataDir}/subj_lists/${cohort}/. ${proj}/files/subj_lists
+	cp -r ${dataDir}/scripts/. ${proj}/scripts
+	cp -r ${dataDir}/subj_lists/. ${proj}/files/subj_lists
 	cp -r ${dataDir}/event_files ${proj}/files
 	cp -r ${dataDir}/contrast_files ${proj}/files
 	cp -r ${dataDir}/ROI_timecourses ${proj}/files
